@@ -1,70 +1,99 @@
-# Getting Started with Create React App
+# Real-Time Glassmorphic Chat App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A full-stack real-time messaging platform built with **React**, **Node.js**, and **PostgreSQL**. This application features a modern, glassmorphic UI, persistent chat history, and real-time presence tracking.
 
-## Available Scripts
+## Core Features
 
-In the project directory, you can run:
+- **Real-Time Private Messaging**: Instant message delivery using WebSockets (Socket.io).
+- **Presence Tracking**: See who's "Online" or "Offline" in real-time.
+- **Typing Indicators**: Visual feedback when someone is actively typing to you.
+- **Chat history Persistence**: All messages are saved in PostgreSQL and retrieved when you select a contact.
+- **JWT Authentication**: Secure login and registration with token-based authorization.
+- **Session Persistence**: Stay logged in even after refreshing the page or closing the browser.
+- **Modern UI/UX**: Stunning glassmorphic design using Material UI (MUI) with smooth transitions.
 
-### `npm start`
+---
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Tech Stack
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### Frontend
+-   **React.js** (Functional Components & Hooks)
+-   **Material UI (MUI)** (For a sleek, modern UI)
+-   **Socket.io-client** (Real-time communication)
+-   **Axios** (API requests)
 
-### `npm test`
+### Backend
+-   **Node.js & Express**
+-   **Socket.io** (WebSocket server)
+-   **PostgreSQL** (Relational Database)
+-   **JWT (jsonwebtoken)** (Security & Session management)
+-   **Denv** (Environment variable management)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+---
 
-### `npm run build`
+## Database Schema
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Run the following SQL commands in your PostgreSQL environment:
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```sql
+-- Users Table
+CREATE TABLE users (
+    id SERIAL PRIMARY KEY,
+    username VARCHAR(100) UNIQUE NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL,
+    password TEXT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+-- Messages Table (Persistent History)
+CREATE TABLE messages (
+    id SERIAL PRIMARY KEY,
+    sender_id INT REFERENCES users(id),
+    receiver_id INT REFERENCES users(id),
+    message TEXT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+```
 
-### `npm run eject`
+---
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## Getting Started
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### 1. Prerequisites
+-   Node.js (v16+) installed.
+-   PostgreSQL installed and running.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### 2. Backend Setup
+```bash
+cd backend
+npm install
+```
+Create a `.env` file in the `backend/` folder:
+```env
+DB_USER=...
+DB_HOST=...
+DB_DATABASE=...
+DB_PASSWORD=...
+DB_PORT=...
+SERVER_PORT=...
+JWT_SECRET=your_long_random_secret_string
+```
+Start the server:
+```bash
+npm start
+```
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+### 3. Frontend Setup
+```bash
+cd frontend
+npm install
+npm start
+```
+The app will open automatically at [http://localhost:3000](http://localhost:3000).
 
-## Learn More
+---
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## Security
+-   Passwords are NOT stored in plain text.
+-   API endpoints (like history fetching) are protected by JWT Middleware.
+-   Socket IDs are managed in-memory (volatile) while User IDs are used for persistent DB logic.
