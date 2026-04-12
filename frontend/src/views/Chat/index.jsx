@@ -56,7 +56,6 @@ const Chat = () => {
             try {
                 const res = await httpCommon.get("/chat/messages/" + selectedContact.id);
                 setMessages(res.data);
-
             } catch (err) {
                 console.error("Failed to fetch message history:", err);
                 setMessages([]);
@@ -71,27 +70,19 @@ const Chat = () => {
         setIsReceiverTyping(false);
     }, [selectedContact?.id]);
 
-
-
     // Messaging & Status Listeners
     useEffect(() => {
         if (!user) return;
 
         const handleReceive = (data) => {
-
-
-
             // Ensure type-safe ID comparison (Number == Number)
             const senderId = Number(data.senderId);
             const currentContactId = Number(selectedContact?.id);
 
             if (senderId === currentContactId) {
                 setMessages((prev) => [...prev, data]);
-            } else {
-
             }
         };
-
 
         const handleTyping = (data) => {
             if (Number(data.senderId) === Number(selectedContact?.id)) {
@@ -109,7 +100,6 @@ const Chat = () => {
             setOnlineUsers(users);
         };
 
-
         // 1. Attach listeners FIRST
         socket.on("receiveMessage", handleReceive);
         socket.on("typing", handleTyping);
@@ -120,7 +110,6 @@ const Chat = () => {
         if (user?.id) {
             socket.emit("join", user.id);
         }
-
 
         return () => {
             socket.off("receiveMessage", handleReceive);

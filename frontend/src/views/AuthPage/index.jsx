@@ -1,7 +1,7 @@
 import { useState, useContext } from "react";
 import { Box, TextField, Typography, Button, Paper, Container, Fade, Snackbar, Alert } from "@mui/material";
 
-import { httpCommon, setAuthToken } from "../../httpCommon";
+import { httpCommon } from "../../httpCommon";
 import { AuthContext } from "../../context/AuthContext";
 
 export default function AuthPage() {
@@ -13,7 +13,6 @@ export default function AuthPage() {
   const handleCloseSnackbar = () => {
     setSnackbar({ ...snackbar, open: false });
   };
-
 
   const [form, setForm] = useState({
     username: "",
@@ -46,7 +45,6 @@ export default function AuthPage() {
           setUser(res.data.user);
         }
       } else {
-
         await httpCommon.post("/auth/register", {
           username: form.username,
           email: form.email,
@@ -79,7 +77,6 @@ export default function AuthPage() {
         overflow: "hidden",
       }}
     >
-      {/* Decorative background elements */}
       <Box
         sx={{
           position: "absolute",

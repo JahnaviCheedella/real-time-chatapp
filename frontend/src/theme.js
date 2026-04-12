@@ -42,7 +42,6 @@ const theme = createTheme({
     MuiOutlinedInput: {
       styleOverrides: {
         root: {
-          // Default border color to white/off-white for contrast
           "& .MuiOutlinedInput-notchedOutline": {
             borderColor: "rgba(255, 255, 255, 0.3)",
           },

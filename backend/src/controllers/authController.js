@@ -18,7 +18,6 @@ export const registerUser = async (req, res) => {
             "INSERT INTO users (username, email, password) VALUES ($1, $2, $3) RETURNING *",
             [username, email, hashedPassword]
         );
-
         res.status(201).json({ message: "User registered successfully", user: result.rows[0] });
     } catch (err) {
         console.error("Registration error:", err);
@@ -44,7 +43,7 @@ export const loginUser = async (req, res) => {
         }
 
         const token = generateToken(user);
-        res.json({ token, user: { id: user.id, username: user.username, email: user.email } });
+        res.status(200).json({ token, user: { id: user.id, username: user.username, email: user.email } });
     } catch (err) {
         console.error("Login error:", err);
         res.status(500).json({ message: "Internal server error during login" });
@@ -54,10 +53,10 @@ export const loginUser = async (req, res) => {
 export const getUsers = async (req, res) => {
     try {
         const users = await pool.query("SELECT id, username, email FROM users");
-        res.json(users.rows);
+        res.status(200).json(users.rows);
     } catch (err) {
         console.error("Fetch users error:", err);
         res.status(500).json({ message: "Internal server error fetching users" });
     }
 }
-
+

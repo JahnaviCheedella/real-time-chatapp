@@ -12,7 +12,7 @@ export const getMessages = async (req, res) => {
              ORDER BY created_at ASC`,
             [userId, otherUserId]
         );
-        res.json(messages.rows);
+        res.status(200).json(messages.rows);
     } catch (err) {
         console.error("Error fetching messages:", err.message);
         res.status(500).json({ message: "Internal server error" });

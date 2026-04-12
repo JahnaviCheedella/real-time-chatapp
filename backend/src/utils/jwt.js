@@ -13,5 +13,5 @@ const generateToken = (user) => {
 export default generateToken;
 
 // When a user types in their correct username and password, you call this generateToken(user) function.
-// It takes their id, stamps it with your unforgeable SECRET, puts a 15-minute timer on it,
+// It takes their id, stamps it with your unforgettable SECRET, puts a 15-minute timer on it,
 // and sends this newly printed "Badge" back to the React frontend to use in their API requests!

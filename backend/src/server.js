@@ -15,7 +15,6 @@ app.use(cors({
   credentials: true
 }));
 
-
 const server = http.createServer(app);
 
 const io = new Server(server, {
@@ -28,10 +27,8 @@ const io = new Server(server, {
 // Initialize web socket
 setupChatSocket(io);
 
-
 app.use("/api/auth", authRoute);
 app.use("/api/chat", chatRoute);
-
 
 const PORT = process.env.PORT || 5000;
 
