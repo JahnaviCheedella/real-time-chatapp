@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const httpCommon = axios.create({
-    baseURL: process.env.REACT_APP_BACKEND_URL,
+    baseURL: process.env.BACKEND_URL,
     headers: {
         "Content-Type": "application/json",
     },
