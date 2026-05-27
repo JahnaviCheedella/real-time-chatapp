@@ -68,7 +68,7 @@ const Chat = () => {
             setMessages([]);
         }
         setIsReceiverTyping(false);
-    }, [selectedContact?.id]);
+    }, [selectedContact]);
 
     // Messaging & Status Listeners
     useEffect(() => {

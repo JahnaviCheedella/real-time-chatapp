@@ -20,7 +20,7 @@ export const AuthProvider = ({ children }) => {
         if (token) {
             setAuthToken(token);
         }
-    }, []);
+    }, [token]);
 
     // Sync state with localStorage
     useEffect(() => {
